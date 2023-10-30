@@ -40,6 +40,10 @@
             </div>
 
             <div class="col-md-12">
+                <hr>
+                <div id="nameCountry_load">
+                    
+                </div>
                 <div class="card mt-4">
                     <div class="card-body">
                         <table class="table table-bordered">
@@ -83,18 +87,27 @@
 	    		console.log("ok");
 	    		console.log(data);
 	    		var str = "";
-	    		if (data.length != 0) {
-				  $.each(data,function(i, item) {
-	    			str+= "<tr>";
-	    			str+= "<td>" + item.district_id + "</td>"
-	    			str+= "<td>" + item.district_name + "</td>"
-	    			str+= "<td>" + item.city_name + "</td>"
-	    			str+= "<td>" + item.country_name + "</td>"
-	    			str+= "</tr>";
-	    			});
-				} else {
-					str+="<h6 class='text-danger text-center mt-3'>No data Found</h6>";
-				}
+                if(data.soluong.length != 0) {
+                    var str1 = "<h2 class='text-center'> Các quận huyện thuộc các thành phố của " + data.dulieu[0].country_name + "</h2>";
+                    $('#nameCountry_load').html(str1);
+                    $.each(data.soluong,function(i, itemm) {
+                        str+="<h4>" + itemm.city_name + "</h4>";
+                        if (data.dulieu.length != 0) {
+                            $.each(data.dulieu,function(i, item) {
+                                if(item.city_name == itemm.city_name) {
+                                    str+= "<tr>";
+                                    str+= "<td>" + item.district_id + "</td>"
+                                    str+= "<td>" + item.district_name + "</td>"
+                                    str+= "<td>" + item.city_name + "</td>"
+                                    str+= "<td>" + item.country_name + "</td>"
+                                    str+= "</tr>";
+                                }
+                            });
+                        }
+                    });
+                } else {
+                    str+="<h6 class='text-danger text-center mt-3'>Nhập sai ID quốc gia, vui lòng nhập lại</h6>";
+                }
 	    		$('#load_data').html(str);
 	    	});
 	    });

@@ -20,14 +20,49 @@ class city_model extends CI_Model {
 			');
 		$this->db->join('city as c', 'd.city_id = c.city_id', 'inner');
 		$this->db->join('country as ct', 'ct.country_id = c.country_id', 'inner');
-		$this->db->where('c.city_id', $cityID);
+		$this->db->where('ct.country_id', $cityID);
 		$ketqua = $this->db->get('
 			district as d
-			');		
+			');
+		// $count = count($ketqua->result_array());
+    	// $ketqua['count'] = $count;
+
 		//$ketqua = $ketqua->result_array();
 		// echo "<pre>";
 		// var_dump($ketqua);
 		return $ketqua;
+	}
+
+	public function getDatabase1($cityID)
+	{
+		// $this->db->select('
+		// 	count
+		// 	');
+		// $this->db->join('city as c', 'd.city_id = c.city_id', 'inner');
+		// $this->db->join('country as ct', 'ct.country_id = c.country_id', 'inner');
+		// $this->db->where('ct.country_id', $cityID);
+		// $ketqua = $this->db->get('
+		// 	district as d
+		// 	');
+		// // $count = count($ketqua->result_array());
+    	// // $ketqua['count'] = $count;
+
+		// //$ketqua = $ketqua->result_array();
+		// // echo "<pre>";
+		// // var_dump($ketqua);
+		// return $ketqua;
+
+
+	    $this->db->select('
+	    	c.city_name
+	    	');
+	    $this->db->from('country ct');
+	    $this->db->join('city c', 'ct.country_id = c.country_id');
+
+		$this->db->where('ct.country_id', $cityID);
+	    $query = $this->db->get();
+
+	    return $query;
 	}
 }
 

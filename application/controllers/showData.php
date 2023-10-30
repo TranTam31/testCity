@@ -21,14 +21,30 @@ class showData extends CI_Controller {
 	// 	// $this->load->view('showCity_view', $dulieu, FALSE);
 	// }
 
+	// public function ajax_show()
+	// {
+	// 	$cityID = $this->input->post('search');
+	// 	$this->load->model('city_model');
+	// 	$districts = $this->city_model->getDatabase($cityID)->result();
+	// 	$noidungmahoa = json_encode($districts);
+	// 	// echo "<pre>";
+	// 	// var_dump($districts);
+	// 	echo $noidungmahoa;
+	// }
 	public function ajax_show()
 	{
 		$cityID = $this->input->post('search');
 		$this->load->model('city_model');
-		$districts = $this->city_model->getDatabase($cityID)->result();
-		$noidungmahoa = json_encode($districts);
+		$districts = $this->city_model->getDatabase1($cityID)->result();
+		$districts1 = $this->city_model->getDatabase($cityID)->result();
+
+		//$noidungmahoa = json_encode($districts, $districts1);
 		// echo "<pre>";
-		// var_dump($noidungmahoa);
+		// var_dump($districts);
+		$noidungmahoa = json_encode([
+	    	'soluong' => $districts,
+	    	'dulieu' => $districts1,
+	    ]);
 		echo $noidungmahoa;
 	}
 }
