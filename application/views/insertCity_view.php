@@ -150,6 +150,7 @@
 		    })
 		    .fail(function() {
 		        console.log("Error");
+		        location.reload(); // reload lại trang nha.
 		    });
         });
     </script>
