@@ -7,10 +7,7 @@ class showData extends CI_Controller {
 		parent::__construct();
 	}
 
-	public function index()
-	{
-		$this->load->view('showCity_view');
-	}
+	
 
 	// public function insertData_controller()
 	// {
@@ -31,21 +28,72 @@ class showData extends CI_Controller {
 	// 	// var_dump($districts);
 	// 	echo $noidungmahoa;
 	// }
-	public function ajax_show()
+
+	//phân cách
+	// public function index()
+	// {
+	// 	$this->load->view('showCity_view');
+	// }
+
+	// public function ajax_show()
+	// {
+	// 	$cityID = $this->input->post('search');
+	// 	$this->load->model('city_model');
+	// 	$districts = $this->city_model->getDatabase1($cityID)->result();
+	// 	$districts1 = $this->city_model->getDatabase($cityID)->result();
+
+	// 	//$noidungmahoa = json_encode($districts, $districts1);
+	// 	// echo "<pre>";
+	// 	// var_dump($districts);
+	// 	$noidungmahoa = json_encode([
+	//     	'soluong' => $districts,
+	//     	'dulieu' => $districts1,
+	//     ]);
+	// 	echo $noidungmahoa;
+	// }
+
+	//phân cách
+
+	public function index()
 	{
-		$cityID = $this->input->post('search');
 		$this->load->model('city_model');
-		$districts = $this->city_model->getDatabase1($cityID)->result();
-		$districts1 = $this->city_model->getDatabase($cityID)->result();
+		$citys = $this->city_model->getCityName();
+		// echo"<pre>";
+		// var_dump($citys);
+		$citys = array("mangketqua" => $citys);
+		$this->load->view('insertCity_view', $citys);
+	}
+
+	public function ajax_showw()
+	{
+		$this->load->model('city_model');
+		$districts = $this->city_model->getCityName_ajax()->result();
 
 		//$noidungmahoa = json_encode($districts, $districts1);
 		// echo "<pre>";
 		// var_dump($districts);
 		$noidungmahoa = json_encode([
-	    	'soluong' => $districts,
-	    	'dulieu' => $districts1,
+	    	'dulieu' => $districts,
 	    ]);
 		echo $noidungmahoa;
+	}
+
+	public function getDataDis()
+	{
+		$cityID = $this->input->post('city_id');
+		$this->load->model('city_model');
+		$districts = $this->city_model->getNameDis($cityID)->result();
+		$noidungmahoa = json_encode([
+	    	'dulieuquan' => $districts,
+	    ]);
+		echo $noidungmahoa;
+	}
+
+	public function pushDataToModel()
+	{
+		$selectedData = $this->input->post('selectedData');
+		$this->load->model('city_model');
+		$this->city_model->insertData($selectedData);
 	}
 }
 

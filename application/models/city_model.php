@@ -64,6 +64,45 @@ class city_model extends CI_Model {
 
 	    return $query;
 	}
+
+	public function getCityName()
+	{
+		$this->db->select('*');
+		$dulieu = $this->db->get('city');
+		$dulieu = $dulieu->result_array();
+		return $dulieu;
+	}
+	public function getCityName_ajax()
+	{
+		$this->db->select('*');
+		$dulieu = $this->db->get('city');
+		$dulieu = $dulieu;
+		return $dulieu;
+
+	}public function getNameDis($cityID)
+	{
+		$this->db->select('
+			district_id,
+			district_name
+			');
+		$this->db->where('city_id', $cityID);
+		return $this->db->get('district');
+	}
+
+
+	// các hàm post
+	public function insertData($selectedData)
+	{
+		foreach ($selectedData as $data) {
+			$city = $data['city'];
+			$district = $data['district'];
+			$dulieu = array(
+				'city_db' => $city,
+				'district_db' => $district 
+			);
+			$this->db->insert('test_insert', $dulieu);
+		}
+	}
 }
 
 /* End of file city_model.php */
